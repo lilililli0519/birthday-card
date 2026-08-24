@@ -1,0 +1,890 @@
+html_code = """<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chúc Mừng Sinh Nhật!</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Fredoka:wght@400;600;700&family=Noto+Sans+TC:wght@400;700;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Fredoka', 'Noto Sans TC', sans-serif;
+            background-color: #f7e1d7;
+            background-image: 
+                radial-gradient(#e56b6f 10%, transparent 11%),
+                radial-gradient(#3a5a40 10%, transparent 11%);
+            background-size: 28px 28px;
+            background-position: 0 0, 14px 14px;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        .font-marker { font-family: 'Permanent Marker', cursive; }
+        .font-handwrite { font-family: 'Caveat', cursive; }
+
+        .tape {
+            background-color: rgba(255, 255, 255, 0.75);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            backdrop-filter: blur(2px);
+            transform: rotate(-3deg);
+        }
+
+        .polaroid {
+            background: white;
+            padding: 10px 10px 24px 10px;
+            box-shadow: 4px 6px 12px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, z-index 0.3s;
+        }
+        .polaroid:hover {
+            transform: scale(1.03) rotate(0deg) !important;
+            z-index: 10;
+        }
+
+        .paper-rip {
+            background: #fff8e7;
+            clip-path: polygon(
+                0% 0%, 100% 0%, 100% 97%, 
+                95% 99%, 90% 96%, 85% 99%, 80% 96%, 75% 98%, 70% 95%, 65% 99%,
+                60% 96%, 55% 98%, 50% 95%, 45% 99%, 40% 95%, 35% 98%, 30% 96%,
+                25% 99%, 20% 96%, 15% 98%, 10% 95%, 5% 98%, 0% 96%
+            );
+        }
+
+        .flame {
+            width: 16px;
+            height: 26px;
+            background: linear-gradient(to bottom, #ffeb3b, #ff9800, #f44336);
+            border-radius: 50% 50% 20% 20%;
+            animation: flicker 0.6s infinite alternate ease-in-out;
+            transform-origin: center bottom;
+            box-shadow: 0 0 15px #ff9800, 0 0 25px #ff5722;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-2deg); }
+            100% { transform: scale(1.15) rotate(3deg); }
+        }
+
+        .flame.extinguished { display: none; }
+
+        .smoke {
+            width: 8px;
+            height: 20px;
+            background: rgba(200, 200, 200, 0.7);
+            border-radius: 10px;
+            animation: rise 1.5s forwards ease-out;
+        }
+
+        @keyframes rise {
+            0% { opacity: 0.8; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-40px) scale(2.5); }
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            80% { transform: scale(1.08); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 pb-20 select-none">
+
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- 頂部固定功能欄 -->
+    <header class="fixed top-0 left-0 right-0 z-50 p-3 flex justify-between items-center bg-white/90 backdrop-blur-md border-b-2 border-slate-900 shadow-sm">
+        <div class="flex items-center gap-2">
+            <span class="text-xl">🎂</span>
+            <span id="navHeaderDisplay" class="font-bold text-slate-900 text-lg tracking-wide font-marker">KIEN'S B-DAY</span>
+        </div>
+        <button id="openEditorBtn" class="bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold px-3 py-1.5 rounded-full border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] active:translate-y-0.5 active:shadow-none text-xs flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-pen-to-square"></i> ✏️ 編輯內容 (Chỉnh sửa)
+        </button>
+    </header>
+
+    <!-- 主內容區 -->
+    <main class="max-w-md mx-auto pt-16 px-3 space-y-7">
+
+        <!-- 1. 開場小測驗問答 (Quiz Section) -->
+        <section id="quizSection" class="relative mt-2">
+            <div class="paper-rip p-5 border-4 border-slate-900 shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative rotate-[-1deg]">
+                <div class="absolute -top-4 -right-3 bg-red-500 text-white font-marker px-3 py-1 text-xs uppercase rotate-12 border-2 border-slate-900 shadow-sm">
+                    TOP SECRET!
+                </div>
+                
+                <h2 class="text-xl font-black text-slate-900 mb-1.5 tracking-tight flex items-center gap-2">
+                    <span>🎯</span> <span id="quizTitleDisplay">THỬ THÁCH: KHÁM PHÁ KIEN</span>
+                </h2>
+                <p id="quizQuestionDisplay" class="text-xs font-bold text-slate-700 mb-3 leading-relaxed bg-amber-100 p-2.5 rounded-xl border border-amber-300">
+                </p>
+
+                <div class="space-y-2" id="quizOptionsContainer">
+                </div>
+
+                <div id="quizSuccessMsg" class="hidden mt-3 p-2.5 bg-emerald-300 border-2 border-slate-900 font-black text-slate-900 text-center text-xs rounded-xl animate-bounce">
+                    🎉 Chính xác! Bạn đã mở khóa nội dung bên dưới!
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 2. 章節 1: 初相識時光走廊 (Chapter 1) -->
+        <section id="chapter1" class="space-y-4 pt-2 opacity-40 pointer-events-none transition-all duration-700">
+            <div class="text-center relative">
+                <span id="chapter1TitleDisplay" class="bg-yellow-300 text-slate-900 font-marker text-2xl px-4 py-1 inline-block border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] rotate-[-2deg]">
+                    CHƯƠNG 1: NGÀY ĐẦU GẶP NHAU
+                </span>
+                <p id="chapter1SubDisplay" class="text-[11px] font-bold text-slate-600 mt-1.5 uppercase tracking-wider">Những khoảnh khắc ngây ngô và đáng nhớ 📸</p>
+            </div>
+
+            <!-- 橫向滑動快選相簿 -->
+            <div class="space-y-1">
+                <span class="text-xs font-bold text-slate-700 flex items-center gap-1 px-1">
+                    <i class="fa-solid fa-arrows-left-right text-amber-600"></i> Vuốt sang để xem album ảnh nhanh:
+                </span>
+                <div id="earlyCarousel" class="flex gap-3 overflow-x-auto no-scrollbar py-2 px-1">
+                </div>
+            </div>
+
+            <!-- 雙欄錯落相片牆 -->
+            <div id="earlyMemoriesGrid" class="grid grid-cols-2 gap-3 pt-1">
+            </div>
+        </section>
+
+
+        <!-- 3. 生日蛋糕 & 互動吹蠟燭 -->
+        <section id="cakeSection" class="pt-3">
+            <div class="bg-pink-200 border-4 border-slate-900 rounded-3xl p-5 text-center shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative overflow-hidden">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-cyan-300 text-slate-900 border-2 border-slate-900 font-marker px-3 py-0.5 text-xs rounded-full">
+                    MAKE A WISH 🎂
+                </div>
+
+                <h3 id="cakeTitleDisplay" class="text-lg font-black text-slate-900 mt-1">Thổi nến và ước một điều ước!</h3>
+                <p id="cakeSubDisplay" class="text-[11px] font-bold text-slate-700 mb-4">Nhấn giữ nút bên dưới 2 giây để thổi tắt nến 🔥</p>
+
+                <div class="relative w-40 h-40 mx-auto flex flex-col items-center justify-end pb-2">
+                    <div id="candle" class="relative cursor-pointer z-10 flex flex-col items-center">
+                        <div id="flame" class="flame mb-1"></div>
+                        <div id="smoke" class="hidden smoke"></div>
+                        <div class="w-3.5 h-9 bg-gradient-to-r from-yellow-300 via-pink-400 to-cyan-300 border-2 border-slate-900 rounded-sm"></div>
+                    </div>
+
+                    <div class="w-28 h-10 bg-pink-400 border-4 border-slate-900 rounded-t-2xl relative -mt-1 flex items-center justify-center">
+                        <div class="w-full h-2 bg-white/70 absolute top-1 rounded-full"></div>
+                        <span id="cakeNameDisplay" class="text-xs font-bold text-white tracking-widest font-marker">KIEN</span>
+                    </div>
+
+                    <div class="w-40 h-14 bg-amber-200 border-4 border-slate-900 rounded-b-xl relative flex items-center justify-around px-2">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500 border border-slate-900"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 border border-slate-900"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-400 border border-slate-900"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 border border-slate-900"></div>
+                    </div>
+                </div>
+
+                <div id="blowInstruction" class="mt-3">
+                    <button id="blowBtn" class="w-full bg-red-400 hover:bg-red-500 text-white font-black py-2.5 rounded-xl border-3 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] active:translate-y-0.5 active:shadow-none text-xs transition relative overflow-hidden">
+                        <span id="blowProgress" class="absolute top-0 left-0 bottom-0 bg-red-600 w-0 transition-all duration-75"></span>
+                        <span id="blowBtnText" class="relative z-10 font-marker tracking-wider text-sm">Nhấn giữ 2 giây để thổi nến</span>
+                    </button>
+                </div>
+
+                <div id="wishUnlockedMsg" class="hidden mt-3 p-2 bg-yellow-300 border-2 border-slate-900 font-black text-slate-900 text-xs rounded-xl animate-pulse">
+                    ✨ Điều ước đã được gửi đi! Mở khóa Chương 2 & Bức thư!
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 4. 章節 2: 深厚回憶與歡樂時光 (Chapter 2) -->
+        <section id="chapter2" class="space-y-4 pt-2 opacity-40 pointer-events-none transition-all duration-700">
+            <div class="text-center relative">
+                <span id="chapter2TitleDisplay" class="bg-emerald-300 text-slate-900 font-marker text-2xl px-4 py-1 inline-block border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] rotate-[2deg]">
+                    CHƯƠNG 2: KỶ NIỆM ĐÁNG NHỚ
+                </span>
+                <p id="chapter2SubDisplay" class="text-[11px] font-bold text-slate-600 mt-1.5 uppercase tracking-wider">Hành trình tình bạn tuyệt vời 🎉</p>
+            </div>
+
+            <!-- 雙欄錯落相片牆 -->
+            <div id="deepMemoriesGrid" class="grid grid-cols-2 gap-3">
+            </div>
+        </section>
+
+
+        <!-- 5. 亮點延伸：特質成就牆 (Fun Achievements) -->
+        <section id="achievementsSection" class="pt-2 opacity-40 pointer-events-none transition-all duration-700">
+            <div class="bg-amber-100 border-4 border-slate-900 rounded-2xl p-4 shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative">
+                <div class="absolute -top-3 left-4 bg-orange-400 text-white font-marker border-2 border-slate-900 px-3 py-0.5 text-xs rounded-lg">
+                    ACHIEVEMENTS UNLOCKED 🏆
+                </div>
+                <h4 id="achieveTitleDisplay" class="font-black text-base text-slate-900 mt-1 mb-3">Huy hiệu đặc biệt của Kien</h4>
+                <div class="grid grid-cols-2 gap-2 text-xs font-bold" id="badgeContainer">
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 6. 拆信封祝福卡片互動區 -->
+        <section id="envelopeSection" class="pt-3 opacity-40 pointer-events-none transition-all duration-700">
+            <div class="text-center mb-3">
+                <span id="envelopeSectionTitleDisplay" class="bg-purple-300 text-slate-900 font-marker text-xl px-4 py-1 inline-block border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] rotate-[-1deg]">
+                    BỨC THƯ ĐẶC BIỆT DÀNH CHO BẠN
+                </span>
+            </div>
+
+            <div id="envelope" class="envelope-wrapper relative bg-amber-50 border-4 border-slate-900 rounded-xl p-5 text-center shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] cursor-pointer hover:bg-white transition">
+                <div class="tape absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5"></div>
+                
+                <div class="my-3">
+                    <i class="fa-solid fa-envelope-open-text text-5xl text-red-500 mb-2"></i>
+                    <h4 id="envelopeTitleDisplay" class="font-marker text-xl text-slate-900">Gửi: Kien 💌</h4>
+                    <p id="envelopeSubDisplay" class="text-[10px] font-bold text-slate-500 uppercase mt-1">Nhấn để mở thư bí mật</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- 7. 信件卡片 Modal -->
+    <div id="cardModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white border-4 border-slate-900 rounded-2xl max-w-sm w-full p-5 shadow-[8px_8px_0px_0px_rgba(251,191,36,1)] relative max-h-[85vh] overflow-y-auto">
+            <button id="closeCardBtn" class="absolute top-3 right-3 bg-red-400 hover:bg-red-500 text-slate-900 border-2 border-slate-900 rounded-full w-7 h-7 font-black text-xs flex items-center justify-center">
+                ✕
+            </button>
+
+            <div class="text-center mb-3">
+                <span id="modalHeaderTitleDisplay" class="font-marker text-2xl text-slate-900 border-b-4 border-yellow-400 pb-0.5 inline-block">CHÚC MỪNG SINH NHẬT!</span>
+            </div>
+
+            <div id="cardMessageDisplay" class="text-slate-800 text-xs leading-relaxed space-y-2.5 whitespace-pre-line font-medium border-2 border-dashed border-slate-300 p-3.5 rounded-xl bg-amber-50">
+            </div>
+
+            <div class="mt-5 text-center">
+                <button id="triggerFireworksBtn" class="w-full bg-amber-400 hover:bg-amber-500 text-slate-900 font-black py-2.5 rounded-xl border-3 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] font-marker text-sm flex items-center justify-center gap-2">
+                    <span>🎉</span> <span id="partyBtnTextDisplay">Bắt đầu tiệc mừng sinh nhật!</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 8. 中文後台編輯 Modal (支援上傳本機照片與動態管理) -->
+    <div id="editorModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white border-4 border-slate-900 rounded-2xl max-w-lg w-full p-5 shadow-[8px_8px_0px_0px_rgba(251,191,36,1)] max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-3 border-b-2 border-slate-900 pb-2 sticky top-0 bg-white z-10 pt-1">
+                <h3 class="font-black text-slate-900 text-base flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-amber-500"></i> 全網頁文字與照片可自訂後台
+                </h3>
+                <button id="closeEditorBtn" type="button" class="text-slate-500 hover:text-slate-900 font-black text-lg">✕</button>
+            </div>
+
+            <form id="editorForm" class="space-y-4 text-xs font-semibold">
+                
+                <!-- 基本資訊 -->
+                <div class="bg-amber-50 p-3 rounded-xl border-2 border-slate-900 space-y-2">
+                    <h4 class="font-bold text-amber-800 text-xs">👤 基本個人資訊</h4>
+                    <div>
+                        <label class="block text-slate-700 mb-1">主角名字 (Friend Name)</label>
+                        <input type="text" id="editName" class="w-full border-2 border-slate-900 rounded-lg p-2 bg-white text-xs">
+                    </div>
+                </div>
+
+                <!-- 開場問答集 -->
+                <div class="bg-blue-50 p-3 rounded-xl border-2 border-slate-900 space-y-2">
+                    <h4 class="font-bold text-blue-800 text-xs">🎯 開場解密問答</h4>
+                    <div>
+                        <label class="block text-slate-700 mb-1">問答標題 (Quiz Title)</label>
+                        <input type="text" id="editQuizTitle" class="w-full border-2 border-slate-900 rounded-lg p-2 bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 mb-1">題目內容 (Quiz Question)</label>
+                        <input type="text" id="editQuizQ" class="w-full border-2 border-slate-900 rounded-lg p-2 bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 mb-1">選項列表 (一行一個，第 1 個為正確答案)</label>
+                        <textarea id="editQuizOpts" rows="3" class="w-full border-2 border-slate-900 rounded-lg p-2 bg-white text-xs leading-tight"></textarea>
+                    </div>
+                </div>
+
+                <!-- 章節標題與按鈕 -->
+                <div class="bg-emerald-50 p-3 rounded-xl border-2 border-slate-900 space-y-2">
+                    <h4 class="font-bold text-emerald-800 text-xs">📌 章節標題與按鈕文字</h4>
+                    <div>
+                        <label class="block text-slate-700 mb-1">章節 1 標題 (Chapter 1 Title)</label>
+                        <input type="text" id="editChap1Title" class="w-full border-2 border-slate-900 rounded-lg p-2 bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 mb-1">章節 1 副標題 (Chapter 1 Subtitle)</label>
+                        <input type="text" id="editChap1Sub" class="w-full border-2 border-slate-900 rounded-lg p-2 bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 mb-1">章節 2 標題 (Chapter 2 Title)</label>
+                        <input type="text" id="editChap2Title" class="w-full border-2 border-slate-900 rounded-lg p-2 bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 mb-1">章節 2 副標題 (Chapter 2 Subtitle)</label>
+                        <input type="text" id="editChap2Sub" class="w-full border-2 border-slate-900 rounded-lg p-2 bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 mb-1">吹蠟燭按鈕文字 (Blow Candle Button Text)</label>
+                        <input type="text" id="editBlowBtnText" class="w-full border-2 border-slate-900 rounded-lg p-2 bg-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-700 mb-1">卡片彈窗【開啟派對】按鈕文字</label>
+                        <input type="text" id="editPartyBtnText" class="w-full border-2 border-slate-900 rounded-lg p-2 bg-white">
+                    </div>
+                </div>
+
+                <!-- 動態照片管理：章節 1 -->
+                <div class="bg-purple-50 p-3 rounded-xl border-2 border-slate-900 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-purple-800 text-xs">🖼️ 【章節 1】相片與說明文字管理</h4>
+                        <button type="button" onclick="addMediaRow('chap1EditorList')" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] border border-slate-900">
+                            ＋ 新增照片
+                        </button>
+                    </div>
+                    <div id="chap1EditorList" class="space-y-3">
+                        <!-- 動態插入相片項目 -->
+                    </div>
+                </div>
+
+                <!-- 動態照片管理：章節 2 -->
+                <div class="bg-pink-50 p-3 rounded-xl border-2 border-slate-900 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-pink-800 text-xs">🖼️ 【章節 2】相片與說明文字管理</h4>
+                        <button type="button" onclick="addMediaRow('chap2EditorList')" class="bg-pink-600 hover:bg-pink-700 text-white font-bold px-2.5 py-1 rounded-lg text-[11px] border border-slate-900">
+                            ＋ 新增照片
+                        </button>
+                    </div>
+                    <div id="chap2EditorList" class="space-y-3">
+                        <!-- 動態插入相片項目 -->
+                    </div>
+                </div>
+
+                <!-- 信件內文 -->
+                <div class="bg-rose-50 p-3 rounded-xl border-2 border-slate-900 space-y-2">
+                    <h4 class="font-bold text-rose-800 text-xs">💌 祝福信件卡片內文</h4>
+                    <textarea id="editCardMsg" rows="5" class="w-full border-2 border-slate-900 rounded-lg p-2 bg-white text-xs leading-relaxed"></textarea>
+                </div>
+
+                <div class="pt-2 flex gap-2 sticky bottom-0 bg-white py-2 border-t border-slate-200">
+                    <button type="button" id="resetDefaultBtn" class="w-1/3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-2 rounded-lg border-2 border-slate-900 transition">重設預設</button>
+                    <button type="submit" class="w-2/3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-black py-2 rounded-lg border-2 border-slate-900 shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] transition">儲存並即時更新網頁</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- JS 邏輯 -->
+    <script>
+        const defaultConfig = {
+            name: "Kien",
+            quizTitle: "THỬ THÁCH: KHÁM PHÁ KIEN",
+            quizQuestion: "Câu hỏi mở khóa: Kien đáng yêu và thu hút nhất khi nào?",
+            quizOptions: [
+                "Khi mỉm cười rạng rỡ và luôn sẵn sàng giúp đỡ bạn bè!",
+                "Khi đang tập trung ăn món khoái khẩu!",
+                "Khi đang trêu đùa và làm trò hài hước cùng đám bạn!"
+            ],
+            correctOptionIndex: 0,
+            chap1Title: "CHƯƠNG 1: NGÀY ĐẦU GẶP NHAU",
+            chap1Sub: "Những khoảnh khắc ngây ngô và đáng nhớ 📸",
+            chap2Title: "CHƯƠNG 2: KỶ NIỆM ĐÁNG NHỚ",
+            chap2Sub: "Hành trình tình bạn tuyệt vời 🎉",
+            cakeTitle: "Thổi nến và ước một điều ước!",
+            cakeSub: "Nhấn giữ nút bên dưới 2 giây để thổi tắt nến 🔥",
+            blowBtnText: "Nhấn giữ 2 giây để thổi nến",
+            partyBtnText: "Bắt đầu tiệc mừng sinh nhật!",
+            achieveTitle: "Huy hiệu đặc biệt của Kien",
+            envelopeSectionTitle: "BỨC THƯ ĐẶC BIỆT DÀNH CHO BẠN",
+            envelopeTitle: "Gửi: Kien 💌",
+            envelopeSub: "Nhấn để mở thư bí mật",
+            modalHeaderTitle: "CHÚC MỪNG SINH NHẬT!",
+            earlyMedia: [
+                { url: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=600&q=80", caption: "Kỷ niệm #1" },
+                { url: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80", caption: "Kỷ niệm #2" },
+                { url: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80", caption: "Kỷ niệm #3" }
+            ],
+            deepMedia: [
+                { url: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=600&q=80", caption: "Khoảnh khắc #1" },
+                { url: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80", caption: "Khoảnh khắc #2" }
+            ],
+            cardMessage: `Gửi Kien,
+
+Chúc mừng sinh nhật bạn! 🎉
+Chúc bạn tuổi mới luôn tràn đầy niềm vui, sức khỏe dồi dào và luôn gặt hái được nhiều thành công!
+
+Rất tuyệt vời khi được đồng hành cùng bạn. Từ những ngày đầu gặp nhau cho đến hôm nay, bạn luôn mang lại năng lượng tích cực và sự ấm áp cho mọi người xung quanh.
+
+Chúc cho mọi dự định và mong ước của bạn trong tuổi mới đều sẽ trở thành hiện thực!
+
+Happy Birthday, Kien! 🎂🥳✨`
+        };
+
+        let config = JSON.parse(localStorage.getItem('kien_bday_config_v4')) || defaultConfig;
+
+        function initPage() {
+            document.getElementById('navHeaderDisplay').innerText = `${config.name.toUpperCase()}'S B-DAY`;
+            document.getElementById('cakeNameDisplay').innerText = config.name.toUpperCase();
+
+            document.getElementById('quizTitleDisplay').innerText = config.quizTitle || "THỬ THÁCH: KHÁM PHÁ KIEN";
+            document.getElementById('quizQuestionDisplay').innerText = config.quizQuestion;
+            
+            const optionsContainer = document.getElementById('quizOptionsContainer');
+            optionsContainer.innerHTML = '';
+            config.quizOptions.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center";
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle-check text-slate-400"></i>`;
+                btn.onclick = () => checkQuizAnswer(idx, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('chapter1TitleDisplay').innerText = config.chap1Title || "CHƯƠNG 1: NGÀY ĐẦU GẶP NHAU";
+            document.getElementById('chapter1SubDisplay').innerText = config.chap1Sub || "Những khoảnh khắc ngây ngô và đáng nhớ 📸";
+            
+            document.getElementById('chapter2TitleDisplay').innerText = config.chap2Title || "CHƯƠNG 2: KỶ NIỆM ĐÁNG NHỚ";
+            document.getElementById('chapter2SubDisplay').innerText = config.chap2Sub || "Hành trình tình bạn tuyệt vời 🎉";
+
+            document.getElementById('cakeTitleDisplay').innerText = config.cakeTitle || "Thổi nến và ước một điều ước!";
+            document.getElementById('cakeSubDisplay').innerText = config.cakeSub || "Nhấn giữ nút bên dưới 2 giây để thổi tắt nến 🔥";
+            document.getElementById('blowBtnText').innerText = config.blowBtnText || "Nhấn giữ 2 giây để thổi nến";
+
+            document.getElementById('achieveTitleDisplay').innerText = config.achieveTitle || `Huy hiệu đặc biệt của ${config.name}`;
+            document.getElementById('envelopeSectionTitleDisplay').innerText = config.envelopeSectionTitle || "BỨC THƯ ĐẶC BIỆT DÀNH CHO BẠN";
+            document.getElementById('envelopeTitleDisplay').innerText = `Gửi: ${config.name} 💌`;
+            document.getElementById('envelopeSubDisplay').innerText = config.envelopeSub || "Nhấn để mở thư bí mật";
+
+            document.getElementById('modalHeaderTitleDisplay').innerText = config.modalHeaderTitle || "CHÚC MỪNG SINH NHẬT!";
+            document.getElementById('partyBtnTextDisplay').innerText = config.partyBtnText || "Bắt đầu tiệc mừng sinh nhật!";
+
+            renderBadges();
+
+            renderCarousel('earlyCarousel', config.earlyMedia);
+            renderMediaGrid('earlyMemoriesGrid', config.earlyMedia);
+            renderMediaGrid('deepMemoriesGrid', config.deepMedia);
+
+            document.getElementById('cardMessageDisplay').innerText = config.cardMessage;
+        }
+
+        function renderBadges() {
+            const container = document.getElementById('badgeContainer');
+            container.innerHTML = `
+                <div class="bg-white p-2.5 rounded-xl border-2 border-slate-900 flex items-center gap-2">
+                    <span class="text-xl">🌟</span>
+                    <div>
+                        <p class="text-slate-900">Vua Tốt Bụng</p>
+                        <p class="text-[10px] text-slate-500">Luôn giúp đỡ bạn bè</p>
+                    </div>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border-2 border-slate-900 flex items-center gap-2">
+                    <span class="text-xl">⚡</span>
+                    <div>
+                        <p class="text-slate-900">Thánh Hài Hước</p>
+                        <p class="text-[10px] text-slate-500">Nguồn năng lượng tích cực</p>
+                    </div>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border-2 border-slate-900 flex items-center gap-2">
+                    <span class="text-xl">🍕</span>
+                    <div>
+                        <p class="text-slate-900">Chuyên Gia Ăn Uống</p>
+                        <p class="text-[10px] text-slate-500">Cùng nhau đi ăn ngon</p>
+                    </div>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border-2 border-slate-900 flex items-center gap-2">
+                    <span class="text-xl">🚀</span>
+                    <div>
+                        <p class="text-slate-900">Tuổi Mới Rực Rỡ</p>
+                        <p class="text-[10px] text-slate-500">Thành công mọi dự định</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderCarousel(containerId, mediaList) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            mediaList.forEach((item, i) => {
+                const el = document.createElement('div');
+                el.className = "flex-none w-36 polaroid border-2 border-slate-900 rotate-[-1deg]";
+                const isVideo = item.url.endsWith('.mp4') || item.url.includes('video') || item.url.startsWith('data:video');
+                const content = isVideo 
+                    ? `<video src="${item.url}" controls muted playsinline loop class="w-full h-32 object-cover rounded border border-slate-200"></video>`
+                    : `<img src="${item.url}" alt="Photo" class="w-full h-32 object-cover rounded border border-slate-200">`;
+                el.innerHTML = `${content}<p class="font-marker text-[11px] text-center mt-1.5 text-slate-800 font-bold truncate px-1">${item.caption || ('Kỷ niệm #' + (i+1))}</p>`;
+                container.appendChild(el);
+            });
+        }
+
+        function renderMediaGrid(containerId, mediaList) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            mediaList.forEach((item, i) => {
+                const card = document.createElement('div');
+                const rotation = (i % 2 === 0 ? 'rotate-[-2deg]' : 'rotate-[2deg]');
+                card.className = `polaroid border-2 border-slate-900 ${rotation} relative`;
+                
+                const isVideo = item.url.endsWith('.mp4') || item.url.includes('video') || item.url.startsWith('data:video');
+                let mediaHtml = isVideo 
+                    ? `<video src="${item.url}" controls muted playsinline loop class="w-full h-36 object-cover border border-slate-200 rounded"></video>`
+                    : `<img src="${item.url}" alt="Memory" class="w-full h-36 object-cover border border-slate-200 rounded">`;
+
+                card.innerHTML = `
+                    <div class="tape absolute -top-2.5 left-1/2 -translate-x-1/2 w-16 h-4"></div>
+                    ${mediaHtml}
+                    <p class="font-marker text-slate-800 text-[11px] mt-2 text-center font-bold truncate px-1">${item.caption || ('Khoảnh khắc #' + (i+1))}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkQuizAnswer(idx, btnElement) {
+            if (idx === config.correctOptionIndex) {
+                btnElement.classList.remove('bg-white');
+                btnElement.classList.add('bg-emerald-300');
+                document.getElementById('quizSuccessMsg').classList.remove('hidden');
+                document.getElementById('chapter1').classList.remove('opacity-40', 'pointer-events-none');
+            } else {
+                btnElement.classList.add('bg-red-200');
+                setTimeout(() => btnElement.classList.remove('bg-red-200'), 500);
+            }
+        }
+
+        let blowTimer = null;
+        let blowProgressVal = 0;
+        const blowBtn = document.getElementById('blowBtn');
+        const blowProgressBar = document.getElementById('blowProgress');
+
+        function startBlowing(e) {
+            e.preventDefault();
+            blowProgressVal = 0;
+            blowTimer = setInterval(() => {
+                blowProgressVal += 5;
+                blowProgressBar.style.width = blowProgressVal + '%';
+                if (blowProgressVal >= 100) {
+                    clearInterval(blowTimer);
+                    extinguishCandle();
+                }
+            }, 100);
+        }
+
+        function stopBlowing() {
+            if (blowProgressVal < 100) {
+                clearInterval(blowTimer);
+                blowProgressVal = 0;
+                blowProgressBar.style.width = '0%';
+            }
+        }
+
+        blowBtn.addEventListener('mousedown', startBlowing);
+        blowBtn.addEventListener('touchstart', startBlowing);
+        window.addEventListener('mouseup', stopBlowing);
+        window.addEventListener('touchend', stopBlowing);
+
+        function extinguishCandle() {
+            document.getElementById('flame').classList.add('extinguished');
+            document.getElementById('smoke').classList.remove('hidden');
+            document.getElementById('blowInstruction').classList.add('hidden');
+            document.getElementById('wishUnlockedMsg').classList.remove('hidden');
+
+            document.getElementById('chapter2').classList.remove('opacity-40', 'pointer-events-none');
+            document.getElementById('achievementsSection').classList.remove('opacity-40', 'pointer-events-none');
+            document.getElementById('envelopeSection').classList.remove('opacity-40', 'pointer-events-none');
+        }
+
+        document.getElementById('envelope').onclick = () => {
+            document.getElementById('cardModal').classList.remove('hidden');
+        };
+
+        document.getElementById('closeCardBtn').onclick = () => {
+            document.getElementById('cardModal').classList.add('hidden');
+        };
+
+        document.getElementById('triggerFireworksBtn').onclick = () => {
+            document.getElementById('cardModal').classList.add('hidden');
+            startCelebrationConfetti();
+        };
+
+        // --- 動態照片編輯器 DOM 生成與管理 ---
+        function addMediaRow(containerId, data = { url: '', caption: '' }) {
+            const container = document.getElementById(containerId);
+            const row = document.createElement('div');
+            row.className = "media-item-row p-2.5 bg-white border-2 border-slate-900 rounded-xl space-y-2 relative shadow-sm";
+            
+            row.innerHTML = `
+                <button type="button" onclick="this.parentElement.remove()" class="absolute top-2 right-2 bg-red-100 hover:bg-red-200 text-red-600 rounded-full w-6 h-6 font-black text-xs flex items-center justify-center border border-red-400">✕</button>
+                
+                <div class="flex items-center gap-2 pr-6">
+                    <div class="w-12 h-12 border border-slate-300 rounded overflow-hidden flex-none bg-slate-100 flex items-center justify-center">
+                        <img src="${data.url || 'https://via.placeholder.com/100?text=Preview'}" class="preview-img w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-[10px] text-slate-500 font-bold mb-0.5">選擇本機照片/影片，或貼上網址：</label>
+                        <input type="file" accept="image/*,video/*" onchange="handleFileUpload(this)" class="block w-full text-[10px] text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-[10px] file:font-semibold file:bg-amber-100 file:text-amber-800 hover:file:bg-amber-200">
+                    </div>
+                </div>
+
+                <div>
+                    <input type="text" value="${data.url}" class="media-url-input w-full border border-slate-300 rounded p-1 text-[10px] font-mono" placeholder="圖片/影片網址 (或自動生成檔案編碼)" onchange="this.parentElement.parentElement.querySelector('.preview-img').src=this.value">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] text-slate-600 font-bold mb-0.5">照片下方說明文字 (Caption)：</label>
+                    <input type="text" value="${data.caption}" class="media-caption-input w-full border border-slate-300 rounded p-1 text-xs" placeholder="例如：Kỷ niệm #1 或 美好的回憶">
+                </div>
+            `;
+            container.appendChild(row);
+        }
+
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // 超過 3MB 壓縮/提示
+            if (file.size > 3 * 1024 * 1024) {
+                alert('提示：照片檔案較大，讀取或儲存可能需要較長時間，建議選用適中大小的照片。');
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const row = input.closest('.media-item-row');
+                const result = e.target.result;
+                row.querySelector('.preview-img').src = result;
+                row.querySelector('.media-url-input').value = result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function populateEditorMediaList(containerId, mediaArray) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            if (mediaArray && mediaArray.length > 0) {
+                mediaArray.forEach(item => addMediaRow(containerId, item));
+            } else {
+                addMediaRow(containerId);
+            }
+        }
+
+        function getMediaListData(containerId) {
+            const container = document.getElementById(containerId);
+            const rows = container.querySelectorAll('.media-item-row');
+            const result = [];
+            rows.forEach(row => {
+                const url = row.querySelector('.media-url-input').value.trim();
+                const caption = row.querySelector('.media-caption-input').value.trim();
+                if (url) {
+                    result.push({ url, caption });
+                }
+            });
+            return result;
+        }
+
+        // 開啟編輯器
+        document.getElementById('openEditorBtn').onclick = () => {
+            document.getElementById('editName').value = config.name || "";
+            document.getElementById('editQuizTitle').value = config.quizTitle || "";
+            document.getElementById('editQuizQ').value = config.quizQuestion || "";
+            document.getElementById('editQuizOpts').value = (config.quizOptions || []).join('\n');
+            
+            document.getElementById('editChap1Title').value = config.chap1Title || "";
+            document.getElementById('editChap1Sub').value = config.chap1Sub || "";
+            document.getElementById('editChap2Title').value = config.chap2Title || "";
+            document.getElementById('editChap2Sub').value = config.chap2Sub || "";
+            document.getElementById('editBlowBtnText').value = config.blowBtnText || "";
+            document.getElementById('editPartyBtnText').value = config.partyBtnText || "";
+
+            populateEditorMediaList('chap1EditorList', config.earlyMedia);
+            populateEditorMediaList('chap2EditorList', config.deepMedia);
+
+            document.getElementById('editCardMsg').value = config.cardMessage || "";
+
+            document.getElementById('editorModal').classList.remove('hidden');
+        };
+
+        document.getElementById('closeEditorBtn').onclick = () => {
+            document.getElementById('editorModal').classList.add('hidden');
+        };
+
+        // 儲存表單
+        document.getElementById('editorForm').onsubmit = (e) => {
+            e.preventDefault();
+            config.name = document.getElementById('editName').value || "Kien";
+            config.quizTitle = document.getElementById('editQuizTitle').value;
+            config.quizQuestion = document.getElementById('editQuizQ').value;
+            
+            config.chap1Title = document.getElementById('editChap1Title').value;
+            config.chap1Sub = document.getElementById('editChap1Sub').value;
+            config.chap2Title = document.getElementById('editChap2Title').value;
+            config.chap2Sub = document.getElementById('editChap2Sub').value;
+            config.blowBtnText = document.getElementById('editBlowBtnText').value;
+            config.partyBtnText = document.getElementById('editPartyBtnText').value;
+
+            config.cardMessage = document.getElementById('editCardMsg').value;
+
+            const opts = document.getElementById('editQuizOpts').value.split('\n').map(s => s.trim()).filter(s => s !== '');
+            if (opts.length > 0) config.quizOptions = opts;
+
+            config.earlyMedia = getMediaListData('chap1EditorList');
+            config.deepMedia = getMediaListData('chap2EditorList');
+
+            try {
+                localStorage.setItem('kien_bday_config_v4', JSON.stringify(config));
+                document.getElementById('editorModal').classList.add('hidden');
+                initPage();
+                alert('所有修改（包含照片、照片下方文字與新增項目）皆已成功更新！');
+            } catch (err) {
+                alert('儲存提醒：由於上傳的本地照片體積較大，超出了瀏覽器的本機快取限制。建議改用網址或較小的照片檔。');
+                initPage();
+                document.getElementById('editorModal').classList.add('hidden');
+            }
+        };
+
+        document.getElementById('resetDefaultBtn').onclick = () => {
+            localStorage.removeItem('kien_bday_config_v4');
+            config = JSON.parse(JSON.stringify(defaultConfig));
+            initPage();
+            document.getElementById('editorModal').classList.add('hidden');
+            alert('已重設為預設照片與文字！');
+        };
+
+        // Confetti Engine
+        const canvas = document.getElementById('confettiCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class ConfettiParticle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 8 + 5;
+                const colors = ['#ff4d6d', '#ffb3c1', '#ffd166', '#06d6a0', '#118ab2', '#073b4c'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 12 + 6;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed - 3;
+                
+                this.gravity = 0.25;
+                this.friction = 0.95;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = (Math.random() - 0.5) * 10;
+                this.opacity = 1;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size * 0.6);
+                ctx.restore();
+            }
+
+            update() {
+                this.vx *= this.friction;
+                this.vy *= this.friction;
+                this.vy += this.gravity;
+                this.x += this.vx;
+                this.y += this.vy;
+                this.rotation += this.rotationSpeed;
+                this.opacity -= 0.008;
+            }
+        }
+
+        function startCelebrationConfetti() {
+            particles = [];
+            for (let i = 0; i < 90; i++) {
+                particles.push(new ConfettiParticle(canvas.width * 0.1, canvas.height * 0.8));
+                particles.push(new ConfettiParticle(canvas.width * 0.9, canvas.height * 0.8));
+            }
+            setTimeout(() => {
+                for (let i = 0; i < 100; i++) {
+                    particles.push(new ConfettiParticle(canvas.width * 0.5, canvas.height * 0.4));
+                }
+            }, 300);
+
+            animateConfetti();
+            showCelebrationBanner();
+        }
+
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach((p, index) => {
+                if (p.opacity > 0) {
+                    p.update();
+                    p.draw();
+                } else {
+                    particles.splice(index, 1);
+                }
+            });
+
+            if (particles.length > 0) {
+                requestAnimationFrame(animateConfetti);
+            }
+        }
+
+        function showCelebrationBanner() {
+            const banner = document.createElement('div');
+            banner.className = 'fixed inset-0 z-[110] flex flex-col items-center justify-center p-6 bg-slate-900/75 backdrop-blur-md animate-pop';
+            banner.innerHTML = `
+                <div class="bg-amber-300 border-4 border-slate-900 rounded-3xl p-6 max-w-xs w-full text-center shadow-[10px_10px_0px_0px_rgba(15,23,42,1)] relative">
+                    <div class="text-6xl mb-2 animate-bounce">🥳</div>
+                    <h1 class="font-marker text-2xl text-slate-900 mb-1">
+                        HAPPY BIRTHDAY!
+                    </h1>
+                    <p class="font-black text-xl text-red-600 mb-4 tracking-wide font-marker">
+                        ${config.name.toUpperCase()} 🎉
+                    </p>
+                    <p class="text-xs font-bold text-slate-800 leading-relaxed mb-5 bg-white p-3 rounded-xl border-2 border-slate-900">
+                        Chúc bạn tuổi mới luôn rạng rỡ, hạnh phúc và gặt hái thật nhiều may mắn! ❤️
+                    </p>
+                    <button onclick="this.parentElement.parentElement.remove()" class="w-full bg-red-500 hover:bg-red-600 text-white font-marker py-2.5 rounded-xl border-3 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] active:translate-y-0.5 active:shadow-none text-sm transition">
+                        ĐÓNG TRANG MỪNG ✕
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(banner);
+        }
+
+        initPage();
+    </script>
+</body>
+</html>"""
+
+with open("index.html", "w", encoding="utf-8") as f:
+    f.write(html_code)
+
+print("index.html fully updated with local file upload, dynamic add/delete, and editable captions!")
