@@ -597,44 +597,80 @@ function checkAnswer(isCorrect) {
 
         <!-- 6. 拆信封祝福卡片互動區 -->
         <section id="envelopeSection" class="pt-3 transition-all duration-700">
-            <div class="text-center mb-3">
-                <span id="envelopeSectionTitleDisplay" class="bg-purple-300 text-slate-900 font-marker text-xl px-4 py-1 inline-block border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] rotate-[-1deg]">BỨC THƯ ĐẶC BIỆT DÀNH CHO BẠN</span>
-            </div>
+    <div class="text-center mb-3">
+        <span id="envelopeSectionTitleDisplay" class="bg-purple-300 text-slate-900 font-marker text-xl px-4 py-1 inline-block border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] rotate-[-1deg]">
+            BỨC THƯ ĐẶC BIỆT DÀNH CHO BẠN
+        </span>
+    </div>
 
-            <div id="envelope" class="envelope-wrapper relative bg-amber-50 border-4 border-slate-900 rounded-xl p-5 text-center shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] cursor-pointer hover:bg-white transition">
-                <div class="tape absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5"></div>
-                
-                <div class="my-3">
-                    <i class="fa-solid fa-envelope-open-text text-5xl text-red-500 mb-2"></i>
-                    <h4 id="envelopeTitleDisplay" class="font-marker text-xl text-slate-900">Gửi: Kien 💌</h4>
-                    <p id="envelopeSubDisplay" class="text-[10px] font-bold text-slate-500 uppercase mt-1">Nhấn để mở thư bí mật</p>
-                </div>
-            </div>
-        </section>
-
-    </main>
+    <div id="envelope" class="envelope-wrapper relative bg-amber-50 border-4 border-slate-900 rounded-xl p-5 text-center shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] cursor-pointer hover:bg-white transition select-none">
+        <div class="tape absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-5"></div>
+        
+        <div class="my-3">
+            <i class="fa-solid fa-envelope-open-text text-5xl text-red-500 mb-2"></i>
+            <h4 id="envelopeTitleDisplay" class="font-marker text-xl text-slate-900">Gửi: Kien 💌</h4>
+            <p id="envelopeSubDisplay" class="text-[10px] font-bold text-slate-500 uppercase mt-1">Nhấn để mở thư bí mật</p>
+        </div>
+    </div>
+</section>
 
 
     <!-- 7. 信件卡片 Modal -->
     <div id="cardModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white border-4 border-slate-900 rounded-2xl max-w-sm w-full p-5 shadow-[8px_8px_0px_0px_rgba(251,191,36,1)] relative max-h-[85vh] overflow-y-auto">
-            <button id="closeCardBtn" class="absolute top-3 right-3 bg-red-400 hover:bg-red-500 text-slate-900 border-2 border-slate-900 rounded-full w-7 h-7 font-black text-xs flex items-center justify-center">
-                ✕
+    <div class="bg-white border-4 border-slate-900 rounded-2xl max-w-sm w-full p-5 shadow-[8px_8px_0px_0px_rgba(251,191,36,1)] relative max-h-[85vh] overflow-y-auto">
+        <button id="closeCardBtn" class="absolute top-3 right-3 bg-red-400 hover:bg-red-500 text-slate-900 border-2 border-slate-900 rounded-full w-7 h-7 font-black text-xs flex items-center justify-center cursor-pointer">
+            ✕
+        </button>
+
+        <div class="text-center mb-3">
+            <span id="modalHeaderTitleDisplay" class="font-marker text-2xl text-slate-900 border-b-4 border-yellow-400 pb-0.5 inline-block">
+                CHÚC MỪNG SINH NHẬT!
+            </span>
+        </div>
+
+         <div id="cardMessageDisplay" class="text-slate-800 text-xs leading-relaxed space-y-2.5 whitespace-pre-line font-medium border-2 border-dashed border-slate-300 p-3.5 rounded-xl bg-amber-50">Chúc mừng sinh nhật bé yêu của anh 🎂🎁🎈🥳<br><br>Anh thật sự rất vui vì năm nay vào ngày sinh nhật của cả hai chúng ta, chúng ta vẫn có thể ở bên cạnh nhau. Có lẽ đây chính là duyên phận nhỉ.<br><br>Ngay từ lúc mới quen, hai đứa mình đã có thể nói chuyện với nhau mãi không hết chuyện. Anh nghĩ đó cũng là một trong những lý do lớn nhất khiến chúng ta trở nên thân thiết như bây giờ. Mặc dù sau khi thân nhau hơn, anh thường hay giận dỗi, lại còn rất thích trêu chọc và chọc ghẹo em nữa, nhưng anh phải nói rằng món quà lớn nhất, lớn nhất mà anh nhận được trong năm nay chính là việc em vẫn luôn ở bên cạnh anh.<br><br>Bất kể lúc anh vui, lúc anh buồn, hay bất cứ trạng thái và cảm xúc nào của anh, em vẫn luôn ở bên cạnh anh. Anh thật sự, thật sự rất biết ơn điều đó.<br><br>Anh biết mình đôi khi rất trẻ con, nhưng em lúc nào cũng bao dung cho anh, dỗ dành anh, và luôn rất chiều theo anh. Lúc đầu hai đứa còn gọi nhau là “chồng” với “vợ”, nghĩ lại thật sự rất đáng yêu và cũng rất hạnh phúc. Nhưng bây giờ như thế này cũng rất tốt.<br><br>Mặc dù đôi lúc anh vẫn luôn có cảm giác rằng em không cần anh nữa, nhưng tất cả đều chỉ là do anh suy nghĩ quá nhiều mà thôi.<br><br>Cảm ơn em vì chưa bao giờ chê món quà anh tặng em ít hay không đủ. Cũng cảm ơn em vì đôi khi em phải cố gắng giữ khoảng cách với anh để tránh ảnh hưởng đến việc những anh lớn khác đến ủng hộ em. Nhưng chỉ cần anh có thể âm thầm ở bên cạnh và đồng hành cùng em, đối với anh như vậy đã là đủ hạnh phúc rồi.<br><br>Nếu sau này có cơ hội, nhất định anh sẽ đến tìm em. Nhưng anh cũng hiểu rất rõ rằng anh không phải kiểu người mà em thích. Dù vậy, chúng ta vẫn có thể trở thành những người bạn thật thật tốt của nhau.<br><br>Anh nghĩ có lẽ sau này tần suất chúng ta liên lạc với nhau sẽ không còn thường xuyên như bây giờ, nhưng cũng không sao cả. Anh chỉ hy vọng em có thể tìm được một người thật sự thật sự yêu em.<br><br>Có lẽ đó là điều mà anh mong muốn được nhìn thấy nhất.<br><br>Trước khi điều đó xảy ra, anh cũng sẽ cố gắng hết sức để bảo vệ em. Anh từng nói rằng anh sẽ luôn là chỗ dựa phía sau của em. Anh sẽ ủng hộ em, ủng hộ bất cứ điều gì em muốn làm.<br><br>Trong mắt anh, em thật sự rất đẹp trai. Đừng thiếu tự tin về bản thân mình nữa. Hãy tin anh, em thật sự rất tuyệt.<br><br>Nếu có lúc nào em cảm thấy thiếu tự tin về bản thân, hoặc có bất cứ chuyện gì khiến em không vui, em đều có thể tìm anh để nói chuyện. Anh lúc nào cũng có thời gian dành cho em. 💗<br><br>Anh biết mình là một người khá nhạy cảm. Đôi khi có lẽ anh chỉ muốn em dành thêm một chút sự quan tâm cho anh mà thôi. Nhưng không sao, anh hiểu em. Vì vậy sau này anh cũng đã dần nghĩ thoáng hơn và không còn để những chuyện đó ảnh hưởng đến mình quá nhiều nữa.<br><br>Thật sự anh không giỏi nói những lời tình cảm đâu. Anh chỉ biết nói lời cảm ơn.<br><br>Cảm ơn em vì tình yêu em đã dành cho anh.<br>Cảm ơn em vì đã mang đến cho anh rất nhiều sức mạnh.<br>Cảm ơn em vì đến tận bây giờ em vẫn luôn đáng yêu và ở bên cạnh anh.<br><br>Có người nói rằng ngâm mình trong bồn tắm sẽ khiến người ta trở nên xinh đẹp hơn. Mà những tấm ảnh em gửi cho anh lúc em tắm thật sự đặc biệt đáng yêu luôn.<br><br>(Có lẽ là vì em không mặc quần áo đó haha, anh đùa thôi 😂)<br><br>Có lẽ anh không đẹp trai, vóc dáng cũng không đẹp. Nhưng nơi này của anh lúc nào cũng chào đón em. Em có thể đến đây nói chuyện với anh bất cứ lúc nào, hoặc làm nũng với anh cũng được.<br><br>Em cũng có thể xem anh như một nơi để trút giận, xả hết những điều không vui trong lòng. Anh rất sẵn lòng.<br><br>Sau này cũng mong em tiếp tục quan tâm và đồng hành cùng anh nhé.<br><br>Mặc dù đôi khi anh vẫn có một chút tính chiếm hữu, nhưng anh biết em không thích điều đó, nên anh cũng đang từ từ học cách buông bớt và kiểm soát nó.<br><br>Nhưng nói gì thì nói, cuối cùng em vẫn là của anh. 🤭<br><br>Anh thật sự không biết nói những lời quá tình cảm, mặc dù thật ra anh là một người rất tình cảm.<br><br>Món quà này tuy không quá đắt tiền hay quý giá, nhưng nó chứa đựng rất nhiều kỷ niệm của hai đứa mình. Có lẽ em sẽ nhìn thấy đoạn này trước tiên.<br><br>Món quà vẫn còn một vài chỗ cần phải hoàn thiện thêm, nên sẽ gửi cho em muộn hơn một chút.<br><br>Chúc em sinh nhật vui vẻ, bé yêu của anh. 🎂💗<br><br>Mong rằng trong tuổi mới, em sẽ yêu bản thân mình nhiều hơn, và cũng yêu anh nhiều hơn một chút. 🤭<br><br>Anh mong rằng hai đứa mình sẽ luôn thật tốt với nhau. Cho dù sau này anh không xem livestream của em, hoặc em không livestream nữa, thì chúng ta vẫn phải giữ liên lạc với nhau nhé.<br><br>Bây giờ hãy ước một điều đi.<br><br>Ba điều ước này là những điều em muốn anh thực hiện cho em. Những điều nào nằm trong khả năng của anh, anh nhất định sẽ cố gắng hoàn thành cho em.</div>
+
+        <div class="mt-5 text-center">
+            <button id="triggerFireworksBtn" class="w-full bg-amber-400 hover:bg-amber-500 text-slate-900 font-black py-2.5 rounded-xl border-3 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] font-marker text-sm flex items-center justify-center gap-2 cursor-pointer">
+                <span>🎉</span> <span id="partyBtnTextDisplay">Chúc mừng sinh nhật chàng trai của tớ</span>
             </button>
-
-            <div class="text-center mb-3">
-                <span id="modalHeaderTitleDisplay" class="font-marker text-2xl text-slate-900 border-b-4 border-yellow-400 pb-0.5 inline-block">CHÚC MỪNG SINH NHẬT!</span>
-            </div>
-
-            <div id="cardMessageDisplay" class="text-slate-800 text-xs leading-relaxed space-y-2.5 whitespace-pre-line font-medium border-2 border-dashed border-slate-300 p-3.5 rounded-xl bg-amber-50">Chúc mừng sinh nhật bé yêu của anh 🎂🎁🎈🥳<br><br>Anh thật sự rất vui vì năm nay vào ngày sinh nhật của cả hai chúng ta, chúng ta vẫn có thể ở bên cạnh nhau. Có lẽ đây chính là duyên phận nhỉ.<br><br>Ngay từ lúc mới quen, hai đứa mình đã có thể nói chuyện với nhau mãi không hết chuyện. Anh nghĩ đó cũng là một trong những lý do lớn nhất khiến chúng ta trở nên thân thiết như bây giờ. Mặc dù sau khi thân nhau hơn, anh thường hay giận dỗi, lại còn rất thích trêu chọc và chọc ghẹo em nữa, nhưng anh phải nói rằng món quà lớn nhất, lớn nhất mà anh nhận được trong năm nay chính là việc em vẫn luôn ở bên cạnh anh.<br><br>Bất kể lúc anh vui, lúc anh buồn, hay bất cứ trạng thái và cảm xúc nào của anh, em vẫn luôn ở bên cạnh anh. Anh thật sự, thật sự rất biết ơn điều đó.<br><br>Anh biết mình đôi khi rất trẻ con, nhưng em lúc nào cũng bao dung cho anh, dỗ dành anh, và luôn rất chiều theo anh. Lúc đầu hai đứa còn gọi nhau là “chồng” với “vợ”, nghĩ lại thật sự rất đáng yêu và cũng rất hạnh phúc. Nhưng bây giờ như thế này cũng rất tốt.<br><br>Mặc dù đôi lúc anh vẫn luôn có cảm giác rằng em không cần anh nữa, nhưng tất cả đều chỉ là do anh suy nghĩ quá nhiều mà thôi.<br><br>Cảm ơn em vì chưa bao giờ chê món quà anh tặng em ít hay không đủ. Cũng cảm ơn em vì đôi khi em phải cố gắng giữ khoảng cách với anh để tránh ảnh hưởng đến việc những anh lớn khác đến ủng hộ em. Nhưng chỉ cần anh có thể âm thầm ở bên cạnh và đồng hành cùng em, đối với anh như vậy đã là đủ hạnh phúc rồi.<br><br>Nếu sau này có cơ hội, nhất định anh sẽ đến tìm em. Nhưng anh cũng hiểu rất rõ rằng anh không phải kiểu người mà em thích. Dù vậy, chúng ta vẫn có thể trở thành những người bạn thật thật tốt của nhau.<br><br>Anh nghĩ có lẽ sau này tần suất chúng ta liên lạc với nhau sẽ không còn thường xuyên như bây giờ, nhưng cũng không sao cả. Anh chỉ hy vọng em có thể tìm được một người thật sự thật sự yêu em.<br><br>Có lẽ đó là điều mà anh mong muốn được nhìn thấy nhất.<br><br>Trước khi điều đó xảy ra, anh cũng sẽ cố gắng hết sức để bảo vệ em. Anh từng nói rằng anh sẽ luôn là chỗ dựa phía sau của em. Anh sẽ ủng hộ em, ủng hộ bất cứ điều gì em muốn làm.<br><br>Trong mắt anh, em thật sự rất đẹp trai. Đừng thiếu tự tin về bản thân mình nữa. Hãy tin anh, em thật sự rất tuyệt.<br><br>Nếu có lúc nào em cảm thấy thiếu tự tin về bản thân, hoặc có bất cứ chuyện gì khiến em không vui, em đều có thể tìm anh để nói chuyện. Anh lúc nào cũng có thời gian dành cho em. 💗<br><br>Anh biết mình là một người khá nhạy cảm. Đôi khi có lẽ anh chỉ muốn em dành thêm một chút sự quan tâm cho anh mà thôi. Nhưng không sao, anh hiểu em. Vì vậy sau này anh cũng đã dần nghĩ thoáng hơn và không còn để những chuyện đó ảnh hưởng đến mình quá nhiều nữa.<br><br>Thật sự anh không giỏi nói những lời tình cảm đâu. Anh chỉ biết nói lời cảm ơn.<br><br>Cảm ơn em vì tình yêu em đã dành cho anh.<br>Cảm ơn em vì đã mang đến cho anh rất nhiều sức mạnh.<br>Cảm ơn em vì đến tận bây giờ em vẫn luôn đáng yêu và ở bên cạnh anh.<br><br>Có người nói rằng ngâm mình trong bồn tắm sẽ khiến người ta trở nên xinh đẹp hơn. Mà những tấm ảnh em gửi cho anh lúc em tắm thật sự đặc biệt đáng yêu luôn.<br><br>(Có lẽ là vì em không mặc quần áo đó haha, anh đùa thôi 😂)<br><br>Có lẽ anh không đẹp trai, vóc dáng cũng không đẹp. Nhưng nơi này của anh lúc nào cũng chào đón em. Em có thể đến đây nói chuyện với anh bất cứ lúc nào, hoặc làm nũng với anh cũng được.<br><br>Em cũng có thể xem anh như một nơi để trút giận, xả hết những điều không vui trong lòng. Anh rất sẵn lòng.<br><br>Sau này cũng mong em tiếp tục quan tâm và đồng hành cùng anh nhé.<br><br>Mặc dù đôi khi anh vẫn có một chút tính chiếm hữu, nhưng anh biết em không thích điều đó, nên anh cũng đang từ từ học cách buông bớt và kiểm soát nó.<br><br>Nhưng nói gì thì nói, cuối cùng em vẫn là của anh. 🤭<br><br>Anh thật sự không biết nói những lời quá tình cảm, mặc dù thật ra anh là một người rất tình cảm.<br><br>Món quà này tuy không quá đắt tiền hay quý giá, nhưng nó chứa đựng rất nhiều kỷ niệm của hai đứa mình. Có lẽ em sẽ nhìn thấy đoạn này trước tiên.<br><br>Món quà vẫn còn một vài chỗ cần phải hoàn thiện thêm, nên sẽ gửi cho em muộn hơn một chút.<br><br>Chúc em sinh nhật vui vẻ, bé yêu của anh. 🎂💗<br><br>Mong rằng trong tuổi mới, em sẽ yêu bản thân mình nhiều hơn, và cũng yêu anh nhiều hơn một chút. 🤭<br><br>Anh mong rằng hai đứa mình sẽ luôn thật tốt với nhau. Cho dù sau này anh không xem livestream của em, hoặc em không livestream nữa, thì chúng ta vẫn phải giữ liên lạc với nhau nhé.<br><br>Bây giờ hãy ước một điều đi.<br><br>Ba điều ước này là những điều em muốn anh thực hiện cho em. Những điều nào nằm trong khả năng của anh, anh nhất định sẽ cố gắng hoàn thành cho em.</div>
-
-            <div class="mt-5 text-center">
-                <button id="triggerFireworksBtn" class="w-full bg-amber-400 hover:bg-amber-500 text-slate-900 font-black py-2.5 rounded-xl border-3 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] font-marker text-sm flex items-center justify-center gap-2">
-                    <span>🎉</span> <span id="partyBtnTextDisplay">Chúc mừng sinh nhật chàng trai của tớ</span>
-                </button>
-            </div>
         </div>
     </div>
+</div>
+
+<!-- ==========================================
+     JAVASCRIPT ĐIỀU KHIỂN BẬT / TẮT MODAL
+     ========================================== -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const envelope = document.getElementById('envelope');
+        const cardModal = document.getElementById('cardModal');
+        const closeCardBtn = document.getElementById('closeCardBtn');
+
+        // Mở thư khi click vào phong bì
+        if (envelope && cardModal) {
+            envelope.addEventListener('click', () => {
+                cardModal.classList.remove('hidden');
+            });
+        }
+
+        // Đóng thư khi click vào nút ✕
+        if (closeCardBtn && cardModal) {
+            closeCardBtn.addEventListener('click', () => {
+                cardModal.classList.add('hidden');
+            });
+        }
+
+        // Đóng thư khi click ra ngoài vùng trắng của Modal
+        if (cardModal) {
+            cardModal.addEventListener('click', (e) => {
+                if (e.target === cardModal) {
+                    cardModal.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script>
 
 
     <!-- 8. 中文後台編輯 Modal (支援上傳本機照片與動態管理) -->
