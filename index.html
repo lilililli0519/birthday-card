@@ -144,7 +144,7 @@
     </header>
 
     <!-- 主內容區 -->
-    <main class="max-w-md mx-auto pt-16 px-3 space-y-7 cursor-default-hover">
+       <main class="max-w-md mx-auto pt-16 px-3 space-y-7">
 
         <!-- 1. 開場小測驗問答 (Quiz Section) -->
         <section id="quizSection" class="relative mt-2">
@@ -158,9 +158,9 @@
                 </h2>
                 <p id="quizQuestionDisplay" class="text-xs font-bold text-slate-700 mb-3 leading-relaxed bg-amber-100 p-2.5 rounded-xl border border-amber-300">Cậu nghĩ điều gì là quan trọng nhất đối với tớ?</p>
 
-                <div class="space-y-2" id="quizOptionsContainer"><button class="w-full text-left hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center bg-emerald-300"><span>1. Cậu khỏe mạnh và mỗi ngày đều vui vẻ</span> <i class="fa-regular fa-circle-check text-slate-400"></i></button><button class="w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center"><span>2. Hẹn hò với cậu</span> <i class="fa-regular fa-circle-check text-slate-400"></i></button><button class="w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center"><span>3. Tớ có phải là số một trong lòng cậu không</span> <i class="fa-regular fa-circle-check text-slate-400"></i></button></div>
+                <div class="space-y-2" id="quizOptionsContainer"><button class="w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center"><span>1. Cậu khỏe mạnh và mỗi ngày đều vui vẻ</span> <i class="fa-regular fa-circle-check text-slate-400"></i></button><button class="w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center"><span>2. Hẹn hò với cậu</span> <i class="fa-regular fa-circle-check text-slate-400"></i></button><button class="w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center"><span>3. Tớ có phải là số một trong lòng cậu không</span> <i class="fa-regular fa-circle-check text-slate-400"></i></button></div>
 
-                <div id="quizSuccessMsg" class="mt-3 p-2.5 bg-emerald-300 border-2 border-slate-900 font-black text-slate-900 text-center text-xs rounded-xl animate-bounce">
+                <div id="quizSuccessMsg" class="hidden mt-3 p-2.5 bg-emerald-300 border-2 border-slate-900 font-black text-slate-900 text-center text-xs rounded-xl animate-bounce">
                     🎉 Chính xác! Bạn đã mở khóa nội dung bên dưới!
                 </div>
             </div>
@@ -168,7 +168,7 @@
 
 
         <!-- 2. 章節 1: 初相識時光走廊 (Chapter 1) -->
-        <section id="chapter1" class="space-y-4 pt-2 transition-all duration-700">
+        <section id="chapter1" class="space-y-4 pt-2 opacity-40 pointer-events-none transition-all duration-700">
             <div class="text-center relative">
                 <span id="chapter1TitleDisplay" class="bg-yellow-300 text-slate-900 font-marker text-2xl px-4 py-1 inline-block border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] rotate-[-2deg]">Trong mắt tớ, cậu muôn hình muôn vẻ</span>
                 <p id="chapter1SubDisplay" class="text-[11px] font-bold text-slate-600 mt-1.5 uppercase tracking-wider">nhưng dáng vẻ nào cũng đều rất đáng yêu 📸</p>
@@ -276,7 +276,8 @@
 
 
         <!-- 3. 生日蛋糕 & 互動吹蠟燭 -->
-        <div class="bg-pink-200 border-4 border-slate-900 rounded-3xl p-5 text-center shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative overflow-hidden">
+        <section id="cakeSection" class="pt-3">
+            <div class="bg-pink-200 border-4 border-slate-900 rounded-3xl p-5 text-center shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative overflow-hidden">
                 <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-cyan-300 text-slate-900 border-2 border-slate-900 font-marker px-3 py-0.5 text-xs rounded-full">
                     MAKE A WISH 🎂
                 </div>
@@ -284,11 +285,10 @@
                 <h3 id="cakeTitleDisplay" class="text-lg font-black text-slate-900 mt-1">Thổi nến và ước một điều ước!</h3>
                 <p id="cakeSubDisplay" class="text-[11px] font-bold text-slate-700 mb-4">Nhấn giữ nút bên dưới 2 giây để thổi tắt nến 🔥</p>
 
-                <!-- 手繪美式蛋糕 -->
                 <div class="relative w-40 h-40 mx-auto flex flex-col items-center justify-end pb-2">
                     <div id="candle" class="relative cursor-pointer z-10 flex flex-col items-center">
-                        <div id="flame" class="flame mb-1 extinguished"></div>
-                        <div id="smoke" class="smoke"></div>
+                        <div id="flame" class="flame mb-1"></div>
+                        <div id="smoke" class="hidden smoke"></div>
                         <div class="w-3.5 h-9 bg-gradient-to-r from-yellow-300 via-pink-400 to-cyan-300 border-2 border-slate-900 rounded-sm"></div>
                     </div>
 
@@ -305,22 +305,22 @@
                     </div>
                 </div>
 
-                <!-- 長按進度條提示 -->
-                <div id="blowInstruction" class="mt-3 hidden">
+                <div id="blowInstruction" class="mt-3">
                     <button id="blowBtn" class="w-full bg-red-400 hover:bg-red-500 text-white font-black py-2.5 rounded-xl border-3 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] active:translate-y-0.5 active:shadow-none text-xs transition relative overflow-hidden">
-                        <span id="blowProgress" class="absolute top-0 left-0 bottom-0 bg-red-600 w-0 transition-all duration-75" style="width: 100%;"></span>
+                        <span id="blowProgress" class="absolute top-0 left-0 bottom-0 bg-red-600 w-0 transition-all duration-75"></span>
                         <span id="blowBtnText" class="relative z-10 font-marker tracking-wider text-sm">Nhấn giữ 2 giây để thổi nến</span>
                     </button>
                 </div>
 
-                <div id="wishUnlockedMsg" class="mt-3 p-2 bg-yellow-300 border-2 border-slate-900 font-black text-slate-900 text-xs rounded-xl animate-pulse">
+                <div id="wishUnlockedMsg" class="hidden mt-3 p-2 bg-yellow-300 border-2 border-slate-900 font-black text-slate-900 text-xs rounded-xl animate-pulse">
                     ✨ Điều ước đã được gửi đi! Mở khóa Chương 2 &amp; Bức thư!
                 </div>
             </div>
+        </section>
 
 
         <!-- 4. 章節 2: 深厚回憶與歡樂時光 (Chapter 2) -->
-        <section id="chapter2" class="space-y-4 pt-2 transition-all duration-700">
+        <section id="chapter2" class="space-y-4 pt-2 opacity-40 pointer-events-none transition-all duration-700">
             <div class="text-center relative">
                 <span id="chapter2TitleDisplay" class="bg-emerald-300 text-slate-900 font-marker text-2xl px-4 py-1 inline-block border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] rotate-[2deg]">Một vài kỷ niệm</span>
                 <p id="chapter2SubDisplay" class="text-[11px] font-bold text-slate-600 mt-1.5 uppercase tracking-wider">Thích nhất là được nhìn thấy dáng vẻ vui vẻ của cậu</p>
@@ -444,13 +444,48 @@
 
 
         <!-- 5. 亮點延伸：特質成就牆 (Fun Achievements) -->
-        <section id="achievementsSection" class="pt-2 transition-all duration-700">
-            
+        <section id="achievementsSection" class="pt-2 opacity-40 pointer-events-none transition-all duration-700">
+            <div class="bg-amber-100 border-4 border-slate-900 rounded-2xl p-4 shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative">
+                <div class="absolute -top-3 left-4 bg-orange-400 text-white font-marker border-2 border-slate-900 px-3 py-0.5 text-xs rounded-lg">
+                    ACHIEVEMENTS UNLOCKED 🏆
+                </div>
+                <h4 id="achieveTitleDisplay" class="font-black text-base text-slate-900 mt-1 mb-3">Huy hiệu đặc biệt của Kien</h4>
+                <div class="grid grid-cols-2 gap-2 text-xs font-bold" id="badgeContainer">
+                <div class="bg-white p-2.5 rounded-xl border-2 border-slate-900 flex items-center gap-2">
+                    <span class="text-xl">🌟</span>
+                    <div>
+                        <p class="text-slate-900">Vua Tốt Bụng</p>
+                        <p class="text-[10px] text-slate-500">Luôn giúp đỡ bạn bè</p>
+                    </div>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border-2 border-slate-900 flex items-center gap-2">
+                    <span class="text-xl">⚡</span>
+                    <div>
+                        <p class="text-slate-900">Thánh Hài Hước</p>
+                        <p class="text-[10px] text-slate-500">Nguồn năng lượng tích cực</p>
+                    </div>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border-2 border-slate-900 flex items-center gap-2">
+                    <span class="text-xl">🍕</span>
+                    <div>
+                        <p class="text-slate-900">Chuyên Gia Ăn Uống</p>
+                        <p class="text-[10px] text-slate-500">Cùng nhau đi ăn ngon</p>
+                    </div>
+                </div>
+                <div class="bg-white p-2.5 rounded-xl border-2 border-slate-900 flex items-center gap-2">
+                    <span class="text-xl">🚀</span>
+                    <div>
+                        <p class="text-slate-900">Tuổi Mới Rực Rỡ</p>
+                        <p class="text-[10px] text-slate-500">Thành công mọi dự định</p>
+                    </div>
+                </div>
+            </div>
+            </div>
         </section>
 
 
         <!-- 6. 拆信封祝福卡片互動區 -->
-        <section id="envelopeSection" class="pt-3 transition-all duration-700">
+        <section id="envelopeSection" class="pt-3 opacity-40 pointer-events-none transition-all duration-700">
             <div class="text-center mb-3">
                 <span id="envelopeSectionTitleDisplay" class="bg-purple-300 text-slate-900 font-marker text-xl px-4 py-1 inline-block border-2 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] rotate-[-1deg]">BỨC THƯ ĐẶC BIỆT DÀNH CHO BẠN</span>
             </div>
