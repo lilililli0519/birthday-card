@@ -146,64 +146,64 @@
         <!-- 1. 開場小測驗問答 (Quiz Section) -->
       <section id="quizSection" class="relative mt-2">
   <div class="paper-rip p-5 border-4 border-slate-900 shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative rotate-[-1deg]">
-    
     <!-- 絕密標籤 -->
     <div class="absolute -top-4 -right-3 bg-red-500 text-white font-marker px-3 py-1 text-xs uppercase rotate-12 border-2 border-slate-900 shadow-sm">
-      絕密！
+      Tuyệt mật!
     </div>
-
+    
     <!-- 標題與題目 -->
     <h2 class="text-xl font-black text-slate-900 mb-1.5 tracking-tight flex items-center gap-2">
       <span id="quizTitleDisplay">🍰☆*：.｡. o(≧▽≦)o.｡.:*☆🥳</span>
     </h2>
     <p id="quizQuestionDisplay" class="text-xs font-bold text-slate-700 mb-3 leading-relaxed bg-amber-100 p-2.5 rounded-xl border border-amber-300">
-      Cậu nghĩ điều gì là quan trọng nhất đối với tớ?
+      Bạn nghĩ điều gì là quan trọng nhất đối với tôi?
     </p>
 
-    <!-- 選項按鈕 -->
+    <!-- 選項列表 -->
     <div class="space-y-2" id="quizOptionsContainer">
-      <!-- 增加 data-correct 屬性來指定正確答案 (假設答案是 1) -->
-      <button data-correct="true" class="quiz-opt w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center cursor-pointer">
-        <span>1. Cậu khỏe mạnh và mỗi ngày đều vui vẻ</span>
+      <!-- data-correct="true" 代表正確答案，其餘為 false -->
+      <button onclick="checkAnswer(true)" class="w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center cursor-pointer">
+        <span>1. Bạn luôn khỏe mạnh và hạnh phúc mỗi ngày.</span>
         <i class="fa-regular fa-circle-check text-slate-400"></i>
       </button>
-
-      <button data-correct="false" class="quiz-opt w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center cursor-pointer">
-        <span>2. Hẹn hò với cậu</span>
+      <button onclick="checkAnswer(false)" class="w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center cursor-pointer">
+        <span>2. Hẹn hò với anh ấy.</span>
         <i class="fa-regular fa-circle-check text-slate-400"></i>
       </button>
-
-      <button data-correct="false" class="quiz-opt w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center cursor-pointer">
-        <span>3. Tớ có phải là số một trong lòng cậu không</span>
+      <button onclick="checkAnswer(false)" class="w-full text-left bg-white hover:bg-amber-100 border-2 border-slate-900 rounded-xl p-2.5 font-bold text-xs text-slate-800 transition flex justify-between items-center cursor-pointer">
+        <span>3. Tôi có phải là số một trong lòng bạn không?</span>
         <i class="fa-regular fa-circle-check text-slate-400"></i>
       </button>
     </div>
 
-    <!-- 解鎖成功訊息 -->
+    <!-- 答對提示 -->
     <div id="quizSuccessMsg" class="hidden mt-3 p-2.5 bg-emerald-300 border-2 border-slate-900 font-black text-slate-900 text-center text-xs rounded-xl animate-bounce">
-      🎉 Chính xác! Bạn đã mở khóa nội dung bên dưới!🥳！
+      🎉 Chính xác! Bạn đã mở khóa nội dung bên dưới!
     </div>
   </div>
 </section>
 
-<!-- 控制互動的 JavaScript -->
+<!-- 全螢幕 答錯 SAD.png 彈窗遮罩 -->
+<div id="sadOverlay" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center">
+  <img src="SAD.png" alt="Sad" class="max-w-full max-h-full object-contain">
+</div>
+
+<!-- 互動功能 JS 邏輯 -->
 <script>
-  document.querySelectorAll('.quiz-opt').forEach(button => {
-    button.addEventListener('click', function() {
-      const isCorrect = this.getAttribute('data-correct') === 'true';
-      const successMsg = document.getElementById('quizSuccessMsg');
-      
-      if (isCorrect) {
-        // 答對時顯示成功訊息
-        successMsg.classList.remove('hidden');
-        this.classList.add('bg-emerald-100');
-      } else {
-        // 答錯時隱藏成功訊息並給予提示效果
-        successMsg.classList.add('hidden');
-        alert('答錯囉，再試一次！');
-      }
-    });
-  });
+function checkAnswer(isCorrect) {
+  if (isCorrect) {
+    // 答對：顯示成功訊息
+    document.getElementById('quizSuccessMsg').classList.remove('hidden');
+  } else {
+    // 答錯：顯示全螢幕 SAD.png，3秒後自動消失
+    const overlay = document.getElementById('sadOverlay');
+    overlay.classList.remove('hidden');
+    
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+    }, 3000);
+  }
+}
 </script>
           <!-- 2. 章節 1: 初相識時光走廊 (Chapter 1) -->
              <div class="text-center relative">
