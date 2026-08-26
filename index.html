@@ -312,48 +312,158 @@ function checkAnswer(isCorrect) {
 
 
         <!-- 3. 生日蛋糕 & 互動吹蠟燭 -->
-        <div class="bg-pink-200 border-4 border-slate-900 rounded-3xl p-5 text-center shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative overflow-hidden">
-                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-cyan-300 text-slate-900 border-2 border-slate-900 font-marker px-3 py-0.5 text-xs rounded-full">
-                    MAKE A WISH 🎂
-                </div>
+       <!-- === 1. MODAL TOÀN MÀN HÌNH CHỨA CAKE.GIF === -->
+<div id="cakeGifModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-4 transition-opacity duration-300">
+    <div class="relative max-w-lg w-full flex flex-col items-center animate-bounce-short">
+        <img src="CAKE.gif" alt="Birthday Cake Animation" class="max-h-[80vh] w-auto object-contain rounded-2xl border-4 border-white shadow-2xl">
+        <p class="text-white font-black text-xl mt-4 font-marker tracking-widest drop-shadow-md">🎉 CHÚC MỪNG SINH NHẬT! 🎉</p>
+    </div>
+</div>
 
-                <h3 id="cakeTitleDisplay" class="text-lg font-black text-slate-900 mt-1">Thổi nến và ước một điều ước!</h3>
-                <p id="cakeSubDisplay" class="text-[11px] font-bold text-slate-700 mb-4">Nhấn giữ nút bên dưới 2 giây để thổi tắt nến 🔥</p>
+<!-- === 2. GIAO DIỆN BÁNH KEM BẰNG TAY CỦA BẠN === -->
+<div class="bg-pink-200 border-4 border-slate-900 rounded-3xl p-5 text-center shadow-[6px_6px_0px_0px_rgba(15,23,42,1)] relative overflow-hidden cursor-default-hover">
+    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-cyan-300 text-slate-900 border-2 border-slate-900 font-marker px-3 py-0.5 text-xs rounded-full">
+        MAKE A WISH 🎂
+    </div>
 
-                <!-- 手繪美式蛋糕 -->
-                <div class="relative w-40 h-40 mx-auto flex flex-col items-center justify-end pb-2">
-                    <div id="candle" class="relative cursor-pointer z-10 flex flex-col items-center">
-                        <div id="flame" class="flame mb-1"></div>
-                        <div id="smoke" class="hidden smoke"></div>
-                        <div class="w-3.5 h-9 bg-gradient-to-r from-yellow-300 via-pink-400 to-cyan-300 border-2 border-slate-900 rounded-sm"></div>
-                    </div>
+    <h3 id="cakeTitleDisplay" class="text-lg font-black text-slate-900 mt-1">Thổi nến và ước một điều ước!</h3>
+    <p id="cakeSubDisplay" class="text-[11px] font-bold text-slate-700 mb-4">Nhấn giữ nút bên dưới 2 giây để thổi tắt nến 🔥</p>
 
-                    <div class="w-28 h-10 bg-pink-400 border-4 border-slate-900 rounded-t-2xl relative -mt-1 flex items-center justify-center">
-                        <div class="w-full h-2 bg-white/70 absolute top-1 rounded-full"></div>
-                        <span id="cakeNameDisplay" class="text-xs font-bold text-white tracking-widest font-marker">KIEN</span>
-                    </div>
+    <!-- 手繪美式蛋糕 -->
+    <div class="relative w-40 h-40 mx-auto flex flex-col items-center justify-end pb-2">
+        <div id="candle" class="relative cursor-pointer z-10 flex flex-col items-center">
+            <div id="flame" class="flame mb-1"></div>
+            <div id="smoke" class="hidden smoke"></div>
+            <div class="w-3.5 h-9 bg-gradient-to-r from-yellow-300 via-pink-400 to-cyan-300 border-2 border-slate-900 rounded-sm"></div>
+        </div>
 
-                    <div class="w-40 h-14 bg-amber-200 border-4 border-slate-900 rounded-b-xl relative flex items-center justify-around px-2">
-                        <div class="w-2.5 h-2.5 rounded-full bg-red-500 border border-slate-900"></div>
-                        <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 border border-slate-900"></div>
-                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-400 border border-slate-900"></div>
-                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 border border-slate-900"></div>
-                    </div>
-                </div>
+        <div class="w-28 h-10 bg-pink-400 border-4 border-slate-900 rounded-t-2xl relative -mt-1 flex items-center justify-center">
+            <div class="w-full h-2 bg-white/70 absolute top-1 rounded-full"></div>
+            <span id="cakeNameDisplay" class="text-xs font-bold text-white tracking-widest font-marker">KIEN</span>
+        </div>
 
-                <!-- 長按進度條提示 -->
-                <div id="blowInstruction" class="mt-3">
-                    <button id="blowBtn" class="w-full bg-red-400 hover:bg-red-500 text-white font-black py-2.5 rounded-xl border-3 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] active:translate-y-0.5 active:shadow-none text-xs transition relative overflow-hidden">
-                        <span id="blowProgress" class="absolute top-0 left-0 bottom-0 bg-red-600 w-0 transition-all duration-75" style="width: 0%;"></span>
-                        <span id="blowBtnText" class="relative z-10 font-marker tracking-wider text-sm">Nhấn giữ 2 giây để thổi nến</span>
-                    </button>
-                </div>
+        <div class="w-40 h-14 bg-amber-200 border-4 border-slate-900 rounded-b-xl relative flex items-center justify-around px-2">
+            <div class="w-2.5 h-2.5 rounded-full bg-red-500 border border-slate-900"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 border border-slate-900"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-yellow-400 border border-slate-900"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 border border-slate-900"></div>
+        </div>
+    </div>
 
-                <div id="wishUnlockedMsg" class="hidden mt-3 p-2 bg-yellow-300 border-2 border-slate-900 font-black text-slate-900 text-xs rounded-xl animate-pulse">
-                    ✨ Điều ước đã được gửi đi! Mở khóa Chương 2 &amp; Bức thư!
-                </div>
-            </div>
+    <!-- 長按進度條提示 -->
+    <div id="blowInstruction" class="mt-3">
+        <button id="blowBtn" class="w-full bg-red-400 hover:bg-red-500 text-white font-black py-2.5 rounded-xl border-3 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] active:translate-y-0.5 active:shadow-none text-xs transition relative overflow-hidden select-none">
+            <span id="blowProgress" class="absolute top-0 left-0 bottom-0 bg-red-600 w-0 transition-none" style="width: 0%;"></span>
+            <span id="blowBtnText" class="relative z-10 font-marker tracking-wider text-sm">Nhấn giữ 2 giây để thổi nến</span>
+        </button>
+    </div>
 
+    <div id="wishUnlockedMsg" class="hidden mt-3 p-2 bg-yellow-300 border-2 border-slate-900 font-black text-slate-900 text-xs rounded-xl animate-pulse">
+        ✨ Điều ước đã được gửi đi! Mở khóa Chương 2 &amp; Bức thư!
+    </div>
+</div>
+
+<!-- === 3. CSS BỔ SUNG NẾU CHƯA CÓ (CÙNG FRAMEWORK TAILWIND) === -->
+<style>
+  .flame {
+    width: 12px;
+    height: 18px;
+    background: orange;
+    border-radius: 50% 50% 20% 20%;
+    box-shadow: 0 0 10px yellow, 0 0 20px orange;
+    animation: flicker 0.6s infinite alternate;
+  }
+  @keyframes flicker {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15) rotate(2deg); }
+  }
+  .smoke {
+    width: 8px;
+    height: 20px;
+    background: rgba(200, 200, 200, 0.6);
+    border-radius: 10px;
+    animation: rise 1s forwards;
+  }
+  @keyframes rise {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-20px) scale(2); }
+  }
+</style>
+
+<!-- === 4. JAVASCRIPT XỬ LÝ SỰ KIỆN NHẤN GIỮ 2 GIÂY === -->
+<script>
+  const blowBtn = document.getElementById('blowBtn');
+  const blowProgress = document.getElementById('blowProgress');
+  const blowBtnText = document.getElementById('blowBtnText');
+  const flame = document.getElementById('flame');
+  const smoke = document.getElementById('smoke');
+  const wishUnlockedMsg = document.getElementById('wishUnlockedMsg');
+  const cakeGifModal = document.getElementById('cakeGifModal');
+
+  let holdTimer = null;
+  let startTime = 0;
+  const HOLD_DURATION = 2000; // 2 giây (2000ms)
+  let animationFrame = null;
+  let isBlown = false;
+
+  function updateProgress() {
+    if (!startTime) return;
+    const elapsedTime = Date.now() - startTime;
+    const percentage = Math.min((elapsedTime / HOLD_DURATION) * 100, 100);
+    blowProgress.style.width = percentage + '%';
+
+    if (elapsedTime < HOLD_DURATION) {
+      animationFrame = requestAnimationFrame(updateProgress);
+    } else {
+      completeBlow();
+    }
+  }
+
+  function startHold(e) {
+    if (isBlown) return;
+    e.preventDefault();
+    startTime = Date.now();
+    animationFrame = requestAnimationFrame(updateProgress);
+  }
+
+  function stopHold() {
+    if (isBlown) return;
+    startTime = 0;
+    cancelAnimationFrame(animationFrame);
+    blowProgress.style.width = '0%';
+  }
+
+  function completeBlow() {
+    isBlown = true;
+    cancelAnimationFrame(animationFrame);
+
+    // 1. Tắt ngọn lửa & hiện khói
+    flame.classList.add('hidden');
+    smoke.classList.remove('hidden');
+
+    // 2. Cập nhật nút bấm và thông báo
+    blowBtnText.innerText = "Nến đã được thổi tắt! 🎂";
+    blowBtn.classList.remove('bg-red-400', 'hover:bg-red-500');
+    blowBtn.classList.add('bg-slate-400', 'cursor-not-allowed');
+    wishUnlockedMsg.classList.remove('hidden');
+
+    // 3. HIỂN THỊ CAKE.GIF TOÀN MÀN HÌNH
+    cakeGifModal.classList.remove('hidden');
+
+    // 4. TỰ ĐỘNG ẨN GIF SAU 2 GIÂY (2000ms)
+    setTimeout(() => {
+      cakeGifModal.classList.add('hidden');
+    }, 2000);
+  }
+
+  // Đăng ký sự kiện (hỗ trợ cả Chuột và Cảm ứng điện thoại)
+  blowBtn.addEventListener('mousedown', startHold);
+  blowBtn.addEventListener('mouseup', stopHold);
+  blowBtn.addEventListener('mouseleave', stopHold);
+
+  blowBtn.addEventListener('touchstart', startHold);
+  blowBtn.addEventListener('touchend', stopHold);
+</script>
 
         <!-- 4. 章節 2: 深厚回憶與歡樂時光 (Chapter 2) -->
         <section id="chapter2" class="space-y-4 pt-2 transition-all duration-700">
