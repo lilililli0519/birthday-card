@@ -639,39 +639,81 @@ function checkAnswer(isCorrect) {
 </div>
 
 <!-- ==========================================
-     JAVASCRIPT ĐIỀU KHIỂN BẬT / TẮT MODAL
+     8. 點擊信件底部按鈕後彈出的祝賀 Modal (圖片中的畫面)
+     ========================================== -->
+<div id="celebrateModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+    <div class="bg-amber-300 border-4 border-slate-900 rounded-3xl max-w-xs w-full p-6 text-center shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] relative">
+        
+        <!-- 表情符號 -->
+        <div class="text-6xl mb-3 animate-bounce">
+            🥳
+        </div>
+
+        <!-- 標題與名字 -->
+        <h2 class="font-marker text-2xl font-black text-slate-900 tracking-wide mb-1">
+            HAPPY BIRTHDAY!
+        </h2>
+        <h3 class="font-marker text-2xl font-black text-red-500 tracking-wider mb-4 flex items-center justify-center gap-1">
+            KIEN 🎉
+        </h3>
+
+        <!-- 祝福文字框 -->
+        <div class="bg-white border-2 border-slate-900 rounded-2xl p-4 mb-5 shadow-[2px_2px_0px_0px_rgba(15,23,42,1)]">
+            <p class="text-slate-900 font-bold text-xs leading-relaxed">
+                Chúc bạn tuổi mới luôn rạng rỡ, hạnh phúc và gặt hái thật nhiều may mắn! 💗
+            </p>
+        </div>
+
+        <!-- 關閉按鈕 -->
+        <button id="closeCelebrateBtn" class="w-full bg-red-500 hover:bg-red-600 text-white font-marker text-sm font-black py-3 rounded-2xl border-3 border-slate-900 shadow-[3px_3px_0px_0px_rgba(15,23,42,1)] active:translate-y-0.5 active:shadow-none transition flex items-center justify-center gap-1 cursor-pointer">
+            <span>ĐÓNG TRANG MỪNG</span> <span>✕</span>
+        </button>
+    </div>
+</div>
+
+<!-- ==========================================
+     JAVASCRIPT 邏輯綁定
      ========================================== -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const envelope = document.getElementById('envelope');
         const cardModal = document.getElementById('cardModal');
         const closeCardBtn = document.getElementById('closeCardBtn');
+        
+        const triggerFireworksBtn = document.getElementById('triggerFireworksBtn');
+        const celebrateModal = document.getElementById('celebrateModal');
+        const closeCelebrateBtn = document.getElementById('closeCelebrateBtn');
 
-        // Mở thư khi click vào phong bì
+        // 1. 點擊信封 -> 打開信件 Modal
         if (envelope && cardModal) {
             envelope.addEventListener('click', () => {
                 cardModal.classList.remove('hidden');
             });
         }
 
-        // Đóng thư khi click vào nút ✕
+        // 2. 點擊 X -> 關閉信件 Modal
         if (closeCardBtn && cardModal) {
             closeCardBtn.addEventListener('click', () => {
                 cardModal.classList.add('hidden');
             });
         }
 
-        // Đóng thư khi click ra ngoài vùng trắng của Modal
-        if (cardModal) {
-            cardModal.addEventListener('click', (e) => {
-                if (e.target === cardModal) {
-                    cardModal.classList.add('hidden');
-                }
+        // 3. 點擊信件最下方按鈕 -> 關閉信件並打開祝賀彈窗 (圖片中的 Modal)
+        if (triggerFireworksBtn && celebrateModal) {
+            triggerFireworksBtn.addEventListener('click', () => {
+                cardModal.classList.add('hidden'); // 隱藏信件 Modal
+                celebrateModal.classList.remove('hidden'); // 顯示祝賀 Modal
+            });
+        }
+
+        // 4. 點擊紅色「ĐÓNG TRANG MỪNG ✕」按鈕 -> 關閉祝賀 Modal
+        if (closeCelebrateBtn && celebrateModal) {
+            closeCelebrateBtn.addEventListener('click', () => {
+                celebrateModal.classList.add('hidden');
             });
         }
     });
 </script>
-
 
     <!-- 8. 中文後台編輯 Modal (支援上傳本機照片與動態管理) -->
     <div id="editorModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
