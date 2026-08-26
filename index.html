@@ -638,9 +638,7 @@ function checkAnswer(isCorrect) {
     </div>
 </div>
 
-<!-- ==========================================
-     8. 點擊信件底部按鈕後彈出的祝賀 Modal (圖片中的畫面)
-     ========================================== -->
+<!--8. 點擊信件底部按鈕後彈出的祝賀 Modal -->
 <div id="celebrateModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
     <div class="bg-amber-300 border-4 border-slate-900 rounded-3xl max-w-xs w-full p-6 text-center shadow-[8px_8px_0px_0px_rgba(15,23,42,1)] relative">
         
@@ -671,9 +669,7 @@ function checkAnswer(isCorrect) {
     </div>
 </div>
 
-<!-- ==========================================
-     JAVASCRIPT 邏輯綁定
-     ========================================== -->
+<!-- JAVASCRIPT 邏輯綁定-->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const envelope = document.getElementById('envelope');
@@ -698,7 +694,7 @@ function checkAnswer(isCorrect) {
             });
         }
 
-        // 3. 點擊信件最下方按鈕 -> 關閉信件並打開祝賀彈窗 (圖片中的 Modal)
+        // 3. 點擊信件最下方按鈕 -> 關閉信件並打開祝賀彈窗 
         if (triggerFireworksBtn && celebrateModal) {
             triggerFireworksBtn.addEventListener('click', () => {
                 cardModal.classList.add('hidden'); // 隱藏信件 Modal
@@ -715,7 +711,7 @@ function checkAnswer(isCorrect) {
     });
 </script>
 
-    <!-- 8. 中文後台編輯 Modal (支援上傳本機照片與動態管理) -->
+    <!-- 9. 中文後台編輯 Modal (支援上傳本機照片與動態管理) -->
     <div id="editorModal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white border-4 border-slate-900 rounded-2xl max-w-lg w-full p-5 shadow-[8px_8px_0px_0px_rgba(251,191,36,1)] max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-3 border-b-2 border-slate-900 pb-2 sticky top-0 bg-white z-10 pt-1">
